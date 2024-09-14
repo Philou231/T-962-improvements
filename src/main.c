@@ -285,7 +285,7 @@ static int32_t Main_Work(void) {
 				Reflow_SetMode(REFLOW_BAKE);
 
 			} else if (sscanf(serial_cmd, cmd_dump_profile, &param) > 0) {
-				printf("\nDumping profile %d: %s\n ", param, Reflow_GetProfileName());
+				printf("\nDumping profile %d: %s\n ", param, Reflow_GetProfileNameIdx(param));
 				Reflow_DumpProfile(param);
 
 			} else if (sscanf(serial_cmd, cmd_setting, &param, &paramF) > 0) {
@@ -417,14 +417,8 @@ static int32_t Main_Work(void) {
 		if(modeChange){
 			LCD_FB_Clear();
 			LCD_BMPDisplay(logobmp, 0, 0);
-			uint8_t n,i;
+			uint8_t n;
 
-			for(n=0;n<8;n++){
-				for(i=0;i<5;i++){
-					if( (i>1) || (n>0 && i>0) || (n>1 && i==0) )
-						LCD_disp_str((uint8_t*)" ", 1, (128-8*6)+(n*6), 26+(i*7), FONT6X6|INVERT);
-				}
-			}
 
 			for(n=0;n<22;n++){
 				LCD_disp_str((uint8_t*)" ", 1, n*6, 2, FONT6X6);

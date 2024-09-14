@@ -190,6 +190,10 @@ const char* Reflow_GetProfileName(void) {
 	return profiles[profileidx]->name;
 }
 
+const char* Reflow_GetProfileNameIdx(uint8_t idx) {
+	return profiles[idx]->name;
+}
+
 uint16_t Reflow_GetSetpointAtIdx(uint8_t idx) {
 	if (idx > (NUMPROFILETEMPS - 1)) {
 		return 0;

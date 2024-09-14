@@ -23,13 +23,15 @@
 #include "reflow_profiles.h"
 #include "setup.h"
 
-static setupMenuStruct setupmenu[] = {
+static setupMenuStruct setupmenu[] = { //             MIN,MAX,OFFSET,GAIN
 	{"Min fan speed    %4.0f",	REFLOW_MIN_FAN_SPEED,	 0, 254, 0, 1.0f, 		"Min fan speed     OFF","Min fan speed     MAX"},
 	{"Cycle done beep %4.1fs",	REFLOW_BEEP_DONE_LEN,	 0, 254, 0, 0.1f, 		"Cycle done beep   OFF","Cycle done beep   MAX"},
-	{"Left TC gain     %1.2f",	TC_LEFT_GAIN, 			10, 190, 0, 0.01f,		"Left TC gain     0.10","Left TC gain     1.90"},
-	{"Left TC offset %6.2f",	TC_LEFT_OFFSET, 		 0, 200, -100, 0.25f,	"Left TC offset -25.00","Left TC offset  25.00"},
-	{"Right TC gain    %1.2f",	TC_RIGHT_GAIN, 			10, 190, 0, 0.01f,		"Right TC gain    0.10","Right TC gain    1.90"},
-	{"Right TC offset%6.2f",	TC_RIGHT_OFFSET, 	 	 0, 200, -100, 0.25f,	"Right TC offset-25.00","Right TC offset 25.00"},
+	{"Left TC 2ndOrd %2.3f",	TC_LEFT_2NDORDER, 		 0, 254, -127, 0.001f,	"Left TC 2ndOrd -0.127","Left TC 2ndOrd  0.127"},
+	{"Left TC gain    %2.2f",	TC_LEFT_GAIN, 			 0, 254, -127, 0.01f,	"Left TC gain    -1.27","Left TC gain     1.27"},
+	{"Left TC offset %4.1f",	TC_LEFT_OFFSET, 		 0, 254, -127, 1.0f,	"Left TC offset -127.0","Left TC offset  127.0"},
+	{"Right TC 2ndOrd%2.3f",	TC_RIGHT_2NDORDER, 		 0, 254, -127, 0.001f,	"Right TC 2ndOrd-0.127","Right TC 2ndOrd 0.127"},
+	{"Right TC gain   %2.2f",	TC_RIGHT_GAIN, 			 0, 254, -127, 0.01f,	"Right TC gain   -1.27","Right TC gain    1.27"},
+	{"Right TC offset%4.1f",	TC_RIGHT_OFFSET, 	 	 0, 254, -127, 1.0f,	"Right TC offset-127.0","Right TC offset 127.0"}, //TODO: Needs fixin'
 	{"Screensaver mins %4.0f",	SCREENSAVER_ACTIVE, 	 0, 60, 0, 1.0f,		"Screensaver       OFF","Screensaver    1 HOUR"},
 };
 

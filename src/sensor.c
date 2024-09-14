@@ -20,6 +20,8 @@
 */
 //#define MAXTEMPOVERRIDE
 
+ // 2nd Order adjust, this will most certaintly have to be calibrated per device
+static float adc2ndorderadj[2];
 // Gain adjust, this may have to be calibrated per device if factory trimmer adjustments are off
 static float adcgainadj[2];
  // Offset adjust, this will definitely have to be calibrated per device
@@ -36,33 +38,47 @@ static float coldjunction;
 void Sensor_ValidateNV(void) {
 	int temp;
 
+	temp = NV_GetConfig(TC_LEFT_2NDORDER);
+	if (temp == 255) {
+		temp = 127;
+		NV_SetConfig(TC_LEFT_2NDORDER, temp); // Default +/-0 2nd Order
+	}
+	adc2ndorderadj[0] = ((float)(temp - 127)) * 0.001f;
+
+	temp = NV_GetConfig(TC_RIGHT_2NDORDER);
+	if (temp == 255) {
+		temp = 127;
+		NV_SetConfig(TC_RIGHT_2NDORDER, temp); // Default +/-0  2nd Order
+	}
+	adc2ndorderadj[1] = ((float)(temp - 127)) * 0.001f;
+
 	temp = NV_GetConfig(TC_LEFT_GAIN);
 	if (temp == 255) {
-		temp = 100;
+		temp = 227;
 		NV_SetConfig(TC_LEFT_GAIN, temp); // Default unity gain
 	}
-	adcgainadj[0] = ((float)temp) * 0.01f;
+	adcgainadj[0] = ((float)(temp - 127)) * 0.01f;
 
 	temp = NV_GetConfig(TC_RIGHT_GAIN);
 	if (temp == 255) {
-		temp = 100;
+		temp = 227;
 		NV_SetConfig(TC_RIGHT_GAIN, temp); // Default unity gain
 	}
-	adcgainadj[1] = ((float)temp) * 0.01f;
+	adcgainadj[1] = ((float)(temp - 127)) * 0.01f;
 
 	temp = NV_GetConfig(TC_LEFT_OFFSET);
 	if (temp == 255) {
-		temp = 100;
+		temp = 127;
 		NV_SetConfig(TC_LEFT_OFFSET, temp); // Default +/-0 offset
 	}
-	adcoffsetadj[0] = ((float)(temp - 100)) * 0.25f;
+	adcoffsetadj[0] = ((float)(temp - 127)) * 1.0f;
 
 	temp = NV_GetConfig(TC_RIGHT_OFFSET);
 	if (temp == 255) {
-		temp = 100;
+		temp = 127;
 		NV_SetConfig(TC_RIGHT_OFFSET, temp); // Default +/-0 offset
 	}
-	adcoffsetadj[1] = ((float)(temp - 100)) * 0.25f;
+	adcoffsetadj[1] = ((float)(temp - 127)) * 1.0f;
 }
 
 
@@ -100,17 +116,33 @@ void Sensor_DoConversion(void) {
 
 	// Assume no CJ sensor
 	cjsensorpresent = 0;
-	if (tcpresent[0] && tcpresent[1]) {
-		avgtemp = (tctemp[0] + tctemp[1]) / 2.0f;
+	if (tcpresent[0] && tcpresent[1]) { //THIS ONE IS THE ONE USED IN MY MACHINE!
 		temperature[0] = tctemp[0];
 		temperature[1] = tctemp[1];
+
+		// 2nd order & Gain adjust
+		temperature[0] = (adc2ndorderadj[0]*temperature[0]*temperature[0]) + (adcgainadj[0]*temperature[0]);
+		temperature[1] = (adc2ndorderadj[1]*temperature[1]*temperature[1]) + (adcgainadj[1]*temperature[1]);
+
+		// Offset adjust
+		temperature[0] += adcoffsetadj[0];
+		temperature[1] += adcoffsetadj[1];
+
 		tempvalid |= 0x03;
 		coldjunction = (tccj[0] + tccj[1]) / 2.0f;
 		cjsensorpresent = 1;
 	} else if (tcpresent[2] && tcpresent[3]) {
-		avgtemp = (tctemp[2] + tctemp[3]) / 2.0f;
 		temperature[0] = tctemp[2];
 		temperature[1] = tctemp[3];
+
+		// 2nd order & Gain adjust
+		temperature[0] = (adc2ndorderadj[0]*temperature[0]*temperature[0]) + (adcgainadj[0]*temperature[0]);
+		temperature[1] = (adc2ndorderadj[1]*temperature[1]*temperature[1]) + (adcgainadj[1]*temperature[1]);
+
+		// Offset adjust
+		temperature[0] += adcoffsetadj[0];
+		temperature[1] += adcoffsetadj[1];
+
 		tempvalid |= 0x03;
 		tempvalid &= ~0x0C;
 		coldjunction = (tccj[2] + tccj[3]) / 2.0f;
@@ -131,18 +163,18 @@ void Sensor_DoConversion(void) {
 		temperature[0] = ((float)temp[0]) / 16.0f;
 		temperature[1] = ((float)temp[1]) / 16.0f;
 
-		// Gain adjust
-		temperature[0] *= adcgainadj[0];
-		temperature[1] *= adcgainadj[1];
+		// 2nd order & Gain adjust
+		temperature[0] = (adc2ndorderadj[0]*temperature[0]*temperature[0]) + (adcgainadj[0]*temperature[0]);
+		temperature[1] = (adc2ndorderadj[1]*temperature[1]*temperature[1]) + (adcgainadj[1]*temperature[1]);
 
 		// Offset adjust
 		temperature[0] += coldjunction + adcoffsetadj[0];
 		temperature[1] += coldjunction + adcoffsetadj[1];
 
 		tempvalid |= 0x03;
-
-		avgtemp = (temperature[0] + temperature[1]) / 2.0f;
 	}
+
+    avgtemp = (temperature[0] + temperature[1]) / 2.0f;
 
 #ifdef MAXTEMPOVERRIDE
 	// If one of the temperature sensors reports higher than 5C above

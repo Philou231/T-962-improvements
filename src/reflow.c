@@ -156,7 +156,7 @@ void Reflow_Init(void) {
 	//PID_init(&PID, 20, 0.04, 25, PID_Direction_Direct); // Improvement as far as I can tell, still work in progress
 	PID_init(&PID, 0, 0, 0, PID_Direction_Direct); // Can't supply tuning to PID_Init when not using the default timebase
 	PID_SetSampleTime(&PID, PID_TIMEBASE);
-	PID_SetTunings(&PID, 20, 0.016, 62.5); // Adjusted values to compensate for the incorrect timebase earlier
+	//PID_SetTunings(&PID, 20, 0.016, 62.5); // Adjusted values to compensate for the incorrect timebase earlier
 	//PID_SetTunings(&PID, 80, 0, 0); // This results in oscillations with 14.5s cycle time
 	//PID_SetTunings(&PID, 30, 0, 0); // This results in oscillations with 14.5s cycle time
 	//PID_SetTunings(&PID, 15, 0, 0);
@@ -166,6 +166,7 @@ void Reflow_Init(void) {
 	//PID_SetTunings(&PID, 10, 0.0066, 0);
 	//PID_SetTunings(&PID, 10, 0.2, 0);
 	//PID_SetTunings(&PID, 10, 0.020, 1.0); // Experimental
+	PID_SetTunings(&PID, 30, 0.02, 0); // PID by Lab231
 
 	Reflow_LoadCustomProfiles();
 

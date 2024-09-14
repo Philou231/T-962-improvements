@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="T-962A" />
+		<Option pch_mode="2" />
+		<Option compiler="null" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin/Release/T-962A" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="null" />
+			</Target>
+		</Build>
+		<Unit filename="src/LPC214x.h" />
+		<Unit filename="src/PID_v1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/PID_v1.h" />
+		<Unit filename="src/adc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/adc.h" />
+		<Unit filename="src/buzzer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/buzzer.h" />
+		<Unit filename="src/circbuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/circbuffer.h" />
+		<Unit filename="src/cr_startup_lpc21.s" />
+		<Unit filename="src/crp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/eeprom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/eeprom.h" />
+		<Unit filename="src/i2c.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/i2c.h" />
+		<Unit filename="src/import.s" />
+		<Unit filename="src/io.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/io.h" />
+		<Unit filename="src/keypad.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/keypad.h" />
+		<Unit filename="src/lcd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/lcd.h" />
+		<Unit filename="src/main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/max31855.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/max31855.h" />
+		<Unit filename="src/nvstorage.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/nvstorage.h" />
+		<Unit filename="src/onewire.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/onewire.h" />
+		<Unit filename="src/reflow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/reflow.h" />
+		<Unit filename="src/reflow_profiles.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/reflow_profiles.h" />
+		<Unit filename="src/rtc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/rtc.h" />
+		<Unit filename="src/sc18is602b.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sc18is602b.h" />
+		<Unit filename="src/sched.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sched.h" />
+		<Unit filename="src/sensor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/sensor.h" />
+		<Unit filename="src/serial.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/serial.h" />
+		<Unit filename="src/setup.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/setup.h" />
+		<Unit filename="src/smallfont.h" />
+		<Unit filename="src/spriteDefs.h" />
+		<Unit filename="src/systemfan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/systemfan.h" />
+		<Unit filename="src/t962.h" />
+		<Unit filename="src/ui_extras.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/ui_extras.h" />
+		<Unit filename="src/version.h" />
+		<Unit filename="src/vic.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/vic.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

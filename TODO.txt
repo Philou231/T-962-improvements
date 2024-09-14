@@ -1,0 +1,2 @@
+-Changer le buzzer pour une musique
+-Ajouter des options au menu "Setup" pour les paramètres P et I du PID
